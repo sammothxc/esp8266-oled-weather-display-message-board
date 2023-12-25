@@ -4,25 +4,28 @@
 // - Add OLED display
 // - Add MQTT
 // - Add OTA
-// - Add WiFi
 // - Add Webserver
 // - Add Websocket
 // - Add weather
 // - Add BLE?
 // - Add Custom image
-// - Add Deep sleep
 /////////////////////////////
 ///////// INCLUDES //////////
 /////////////////////////////
 #include <Arduino.h>
 #include <Wire.h>
 #include <SSD1306Wire.h>
+#include <ESP8266WiFi.h>
+#include <ArduinoOTA.h>
+#include <DNSServer.h>
+#include <ESP8266WebServer.h>
+#include <WiFiManager.h>
 //#include "images.h"
 /////////////////////////////
 ///////// CONFIGS ///////////
 //#define led_pin 2        // Uncomment this line and change the number to use a different pin for the LED
-#define button 1           // Digital pin for the button
-#define sensor 0           // Analog pin for the light sensor
+#define button D0           // Digital pin for the button
+#define sensor 6           // Analog pin for the light sensor
 #define oled_sda 4         // SDA pin for the OLED display
 #define oled_scl 5         // SCL pin for the OLED display
 //#define flipped          // Uncomment this line to flip the OLED display
@@ -38,9 +41,13 @@ SSD1306Wire display(0x3c, oled_sda, oled_scl);
 bool new_message = false;
 bool night_mode = false;
 bool printed = false;
+bool standby_msg = false;
+int led_state = 0;
 int light_threshold = 100;
-unsigned long timer_on = 0;
-unsigned long timer_off = 0;
+unsigned long led_timer = 0;
+unsigned long oled_timer = 0;
+unsigned long weather_timer = 0;
+unsigned long msg_timer = 0;
 /////////////////////////////
 //////// FUNCTIONS //////////
 /////////////////////////////
@@ -56,47 +63,65 @@ void heartbeat() {                                              // Heartbeat
 }
 
 void standby() {                                                // Standby mode
-  if(not printed) {
+  if(weather_timer + 1800 < (millis() / 1000)) {                // Check for weather every half hour
+    weather_timer = millis() / 1000;
+    //get weather
+  }
+  if(oled_timer + 10 < (millis() / 1000) && not standby_msg) {
+    oled_timer = millis() / 1000;
+    standby_msg = true;
     display.clear();
-    display.drawString(0, 0, "Standby");
-    printed = true;
+    display.drawString(0, 0, "Time and Weather");
+  }
+  if(oled_timer + 10 < (millis() / 1000) && standby_msg) {
+    oled_timer = millis() / 1000;
+    standby_msg = false;
+    display.clear();
+    display.drawString(0, 0, "Quote.");
   }
 }
 
 void nightmode() {                                             // Turn everything off and go to sleep
   display.clear();
   analogWrite(led, 0);
-  delay(10000);
-  // add deep sleep functionality?
-}
+  while(analogRead(sensor) < light_threshold) {                 // Wait until the light sensor is above the threshold
+    delay(60000);
+  }
+  night_mode = false;
+  }
 
 void newmessage() {                                             // Display the new message
   display.clear();
   display.drawString(0, 0, "New message!");
-  if(timer_on + 1000 < millis()) {
+  if(led_timer + 1 < (millis() / 1000) && led_state == LOW) {
+    led_state = HIGH;
+    led_timer = millis() / 1000;
     digitalWrite(led, HIGH);
-    timer_off = millis();
   }
-  if(timer_off + 1000 < millis()) {
+  if(led_timer + 1 < (millis() / 1000) && led_state == HIGH) {
+    led_state = LOW;
+    led_timer = millis() / 1000;
     digitalWrite(led, LOW);
-    timer_on = millis();
   }
-
 }
 
-void running() {                                               // Check for new messages
-  //check for messages at intervals
+void running() {                                                 // Check for new messages
+  if(msg_timer + 15 < (millis() / 60000)) {                      // Check for messages every 15 seconds
+    msg_timer = millis() / 1000;
+    //check for messages
+  }
   new_message = true;
-  if( not new_message ) {
+  if(not new_message ) {
     heartbeat();
     standby();
   }
-  else {
+  if(new_message) {
     newmessage();
   }
 }
 
 void setup() {
+  Serial.begin(115200);
   pinMode(led, OUTPUT);
   display.init();
   #ifdef flipped
@@ -105,23 +130,27 @@ void setup() {
   display.setFont(ArialMT_Plain_10);
   display.setTextAlignment(TEXT_ALIGN_LEFT);
   display.setColor(WHITE);
+  WiFiManager wifiManager;
+  wifiManager.autoConnect("MomsMantra");
 }
 
 void loop() {
+  /*
   if(analogRead(sensor) < light_threshold) {                    // If the light sensor is below the threshold, turn on the LED
     night_mode = true;                                          // Set night mode to true
   }
   else {                                                        // If the light sensor is above the threshold, turn off the LED
     night_mode = false;                                         // Set night mode to false
   }
-  //if(digitalRead(button) == 0) {                                // If the button is pressed, set unread to false
-  //  new_message = false;
-  //}
+  */
+  if(digitalRead(button) == 0) {                                // If the button is pressed, set unread to false
+    new_message = false;
+  }
   if(not night_mode) {                                          // If there is no new message, standby mode
     running();
   }
-  else {                                                        // If there is a new message, display it
-    //nightmode();
+  if(night_mode) {                                              // If night mode detected, run night mode function
+    nightmode();
   }
   display.display();                                            // Display the OLED display
 }
