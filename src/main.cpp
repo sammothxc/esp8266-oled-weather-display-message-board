@@ -27,7 +27,6 @@
 #define sensor A0          // Analog pin for the light sensor
 #define oled_sda 4         // SDA pin for the OLED display
 #define oled_scl 15        // SCL pin for the OLED display
-#define oled_rst 16        // RST pin for the OLED display
 //#define flipped          // Uncomment this line to flip the OLED display
 #define OTA              // Uncomment this line to enable OTA
 #define TZ 2               // Define timezone
