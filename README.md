@@ -12,6 +12,9 @@ This is an Arduino project that uses an ESP8266 board to display weather informa
 - WiFiManager allows for easy WiFi setup without having to hardcode SSID and password and also allows for easy WiFi reconfiguration and setup without having to reprogram the board or needing to connect to the board via serial
 - ArduinoOTA allows for easy OTA updates without having to connect to the board via serial
 
+## Configurations
+- TODO
+
 ## Prerequisites
 You will need the following libraries installed on your Arduino IDE or PlatformIO:
 - ESP8266 and ESP32 OLED driver for SSD1306 displays
@@ -21,7 +24,7 @@ You will need the following libraries installed on your Arduino IDE or PlatformI
 - ESP8266 Weather Station
 You will also need to create a secrets.h file that contains your OpenWeatherMap API key and MQTT server details along with other required passwords and stuff.
 
-## Installing
+## Installation
 - Clone the repository to your local machine.
 - Open the project in your IDE.
 - Install the necessary libraries.
@@ -34,3 +37,4 @@ This project is licensed under the GNU General Public License v3.0 - see the LIC
 ## TODO
 - Add custom weather icons for different weather conditions
 - Local network web server for displaying weather information and messages
+- Write Configs Section
