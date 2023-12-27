@@ -22,7 +22,7 @@ You will need the following libraries installed on your Arduino IDE or PlatformI
 - PubSubClient
 - WiFiManager
 - ESP8266 Weather Station
-You will also need to create a secrets.h file that contains your OpenWeatherMap API key and MQTT server details along with other required passwords and stuff.
+You will also need to create a secretfile.h and secretfile.py files that contains your OpenWeatherMap API key and MQTT server details along with other required passwords and stuff. I have included the template files for this (secretfile_example.h and secretfile.py) in their respective directories.
 
 ## Installation
 - Clone the repository to your local machine.

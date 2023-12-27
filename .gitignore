@@ -5,3 +5,4 @@ src/secretfile.py
 platformio.ini
 esp8266-wifi-message-board.code-workspace
 .DS_Store
+src/__pycache__
