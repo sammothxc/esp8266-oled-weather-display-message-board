@@ -43,4 +43,3 @@ This project is licensed under the GNU General Public License v3.0 - see the LIC
 ## TODO
 - Add custom weather icons for different weather conditions
 - Local network web server for displaying weather information and messages
-- Write Configs Section
