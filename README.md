@@ -13,7 +13,13 @@ This is an Arduino project that uses an ESP8266 board to display weather informa
 - ArduinoOTA allows for easy OTA updates without having to connect to the board via serial
 
 ## Configurations
-- TODO
+- `button` - The pin number of the button
+- `led_pin` - The pin number of the notification LED
+- `sensor` - The pin number of the light sensor
+- `oled_sda` and `oled_scl` - The SDA and SCL pins of the OLED display
+- `flipped` - Uncomment this line to flip your display if it is upside down
+- `OTA` - Uncomment this line to enable OTA updates
+- `SECRET_SERVER` - The address of the MQTT server, defined in secretfile.h
 
 ## Prerequisites
 You will need the following libraries installed on your Arduino IDE or PlatformIO:
