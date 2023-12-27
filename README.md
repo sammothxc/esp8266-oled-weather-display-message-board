@@ -29,7 +29,7 @@ You will also need to create a secrets.h file that contains your OpenWeatherMap 
 - Upload the code to your ESP8266 board.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+This project is licensed under the GNU General Public License v3.0 - see the LICENSE.md file for details.
 
 ## TODO
 - Add custom weather icons for different weather conditions
