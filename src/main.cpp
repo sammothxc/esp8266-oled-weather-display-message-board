@@ -2,7 +2,7 @@
 //////////// TODO ///////////
 /////////////////////////////
 // - Add weather icons
-// - Fix MQTT
+// - Fix MQTT publish message
 /////////////////////////////
 ///////// INCLUDES //////////
 /////////////////////////////
@@ -34,6 +34,7 @@
 #define DST_MN 60          // Define daylight savings time
 String LANG = "en";        // OpenWeatherMap language
 boolean IS_METRIC = false; // Imperial: false, Metric: true
+//#define light_sensor      // Uncomment this line to enable the light sensor
 const char* mqtt_server = SECRET_SERVER;
 /////////////////////////////
 ///////// DEFINES ///////////
@@ -227,14 +228,14 @@ void setup() {
 void loop() {
   client.loop();
   yield();
-  /*
-  if(analogRead(sensor) < light_threshold) {                    // If the light sensor is below the threshold, turn on the LED
-    night_mode = true;                                          // Set night mode to true
-  }
-  else {                                                        // If the light sensor is above the threshold, turn off the LED
-    night_mode = false;                                         // Set night mode to false
-  }
-  */
+  #ifdef light_sensor
+    if(analogRead(sensor) < light_threshold) {                    // If the light sensor is below the threshold, turn on the LED
+      night_mode = true;                                          // Set night mode to true
+    }
+    else {                                                        // If the light sensor is above the threshold, turn off the LED
+      night_mode = false;                                         // Set night mode to false
+    }
+  #endif
   if(new_message) {                                             // If there is a new message, run new message function
     notify();
   }
