@@ -1,5 +1,7 @@
 .pio
 .vscode
-include/secrets.h
+include/secretfile.h
+src/secretfile.py
 platformio.ini
 esp8266-wifi-message-board.code-workspace
+.DS_Store
