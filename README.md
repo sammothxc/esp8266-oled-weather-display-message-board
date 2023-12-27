@@ -1,4 +1,4 @@
-# ESP8266 OLED Weather Display and Message Board
+# ESP8266 OLED Weather Display Message Board
 ## Description
 This is an Arduino project that uses an ESP8266 board to display weather information and receive MQTT messages. The project uses your OpenWeatherMap API to fetch current weather data and MQTT to retrieve messages and act as a message board. The project then switches between displaying the current weather information and the last recieved message on an 128x64 OLED display connected to the ESP8266 board.
 
