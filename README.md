@@ -28,7 +28,7 @@ You will also need to create a secretfile.h and secretfile.py files that contain
 - Clone the repository to your local machine.
 - Open the project in your IDE.
 - Install the necessary libraries.
-- Create a secrets.h file and add your OpenWeatherMap API key and MQTT server details.
+- Create required secrets files and add necessary info.
 - Upload the code to your ESP8266 board.
 
 ## License
