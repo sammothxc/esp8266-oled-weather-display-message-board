@@ -41,12 +41,12 @@
 //#include "images.h"
 /////////////////////////////
 ///////// CONFIGS ///////////
-//#define led_pin 2        // Uncomment this line and change the number to use a different pin for LED
-#define button 0           // Digital pin for the button
+#define led_pin 4          // Uncomment this line and change the number to use a different pin for LED
+#define button 5           // Digital pin for the button
 #define sensor A0          // Analog pin for the light sensor
-#define oled_sda 4         // SDA pin for the OLED display
-#define oled_scl 15        // SCL pin for the OLED display
-//#define flipped          // Uncomment this line to flip the OLED display
+#define oled_sda 2         // SDA pin for the OLED display
+#define oled_scl 14        // SCL pin for the OLED display
+#define flipped          // Uncomment this line to flip the OLED display
 #define OTA              // Uncomment this line to enable OTA
 #define TZ 2               // Define timezone
 #define DST_MN 60          // Define daylight savings time
