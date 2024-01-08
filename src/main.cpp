@@ -41,8 +41,8 @@
 //#include "images.h"
 /////////////////////////////
 ///////// CONFIGS ///////////
-#define led_pin 4          // Uncomment this line and change the number to use a different pin for LED
-#define button 5           // Digital pin for the button
+#define led_pin 5          // Uncomment this line and change the number to use a different pin for LED
+#define button 6           // Digital pin for the button
 #define sensor A0          // Analog pin for the light sensor
 #define oled_sda 2         // SDA pin for the OLED display
 #define oled_scl 14        // SCL pin for the OLED display
